@@ -21,15 +21,15 @@ DB.prototype.findNumber = function(number, callback) {
 };
 
 DB.prototype.updateCode = function(number, code, callback) {
-    var query = this.client.query('UPDATE users SET code = $1 WHERE phnumber = $2', [code, number], function(err, result) {
+    var query = this.client.query('UPDATE users SET code = $1 WHERE phnumber = $2', [code, number], function (err, result) {
         callback(err);
     });
+};
 
 DB.prototype.findCode = function(number, code, callback){
-    var query = client.query('SELECT EXISTS(SELECT 1 FROM users WHERE phnumber = $1 AND code = $2)', [number, code], function (err, result) {
+    var query = this.client.query('SELECT EXISTS(SELECT 1 FROM users WHERE phnumber = $1 AND code = $2)', [number, code], function (err, result) {
         callback(err, result);
-    })
-}
+    });
 };
 
 module.exports = DB;

@@ -32,6 +32,21 @@ function checkNumber(number, code) {
     });
 }
 
-function checkCode(code) {
-    
+function checkCode(number, code) {
+    db.findCode(number, code, function (err, res) {
+        if(!err){
+            if(res.rows[0].exists){
+                console.log("Codes for number " + number + " are the same");
+                db.client.end();
+            } else {
+                console.log("Codes for number " + number + " are not the same");
+                db.client.end();
+            }
+        } else {
+            console.log('error: ' + err);
+            db.client.end();
+        }
+    });
 }
+
+checkCode(9876453214, 10689);
