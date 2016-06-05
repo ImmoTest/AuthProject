@@ -26,8 +26,8 @@ DB.prototype.updateCode = function(number, code, callback) {
     });
 };
 
-DB.prototype.findCode = function(number, code, callback){
-    var query = this.client.query('SELECT EXISTS(SELECT 1 FROM users WHERE phnumber = $1 AND code = $2)', [number, code], function (err, result) {
+DB.prototype.findCode = function(code, callback){
+    var query = this.client.query('SELECT EXISTS(SELECT 1 FROM users WHERE code = $1)', [code], function (err, result) {
         callback(err, result);
     });
 };

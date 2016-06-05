@@ -2,51 +2,86 @@
  * Created by kamill on 6/5/16.
  */
 var dbClass = require('./database');
+var currentdate = new Date();
 var db = new dbClass(process.env.DATABASE_URL || 'postgres://postgres:c8009991861@localhost/postgres');
 
-function checkNumber(number, code) {
-
-    db.findNumber(number, function(err, res) {
-        if(!err) {
-            if(res.rows[0].exists) {
-                console.log("I want to update.");
-                db.updateCode(number, code, function (err) {
-                    if (err) {
-                        console.log('error: ' + err);
-                    } else console.log("I updated.");
-                    db.client.end();
-                });
+module.exports = {
+    checkNumber: function (number, code) {
+        db.findNumber(number, function(err, res) {
+            if(!err) {
+                if(res.rows[0].exists) {
+                    console.log(currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/"
+                        + currentdate.getFullYear() + " @ "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds() + "   I want to update " + number);
+                    db.updateCode(number, code, function (err) {
+                        if (err) {
+                            console.log('error: ' + err);
+                        } else console.log(currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/"
+                            + currentdate.getFullYear() + " @ "
+                            + currentdate.getHours() + ":"
+                            + currentdate.getMinutes() + ":"
+                            + currentdate.getSeconds() + "   I updated " + number);
+                        //db.client.end();
+                    });
+                } else {
+                    console.log(currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/"
+                        + currentdate.getFullYear() + " @ "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds() + "   I want to add new user with number " + number);
+                    db.newUser(number, code, function(err){
+                        if (err) {
+                            console.log('error: ' + err);
+                        } else console.log(currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/"
+                            + currentdate.getFullYear() + " @ "
+                            + currentdate.getHours() + ":"
+                            + currentdate.getMinutes() + ":"
+                            + currentdate.getSeconds() + "  I added " + number);
+                        //db.client.end();
+                    });
+                }
             } else {
-                console.log("I want to add new user.");
-                db.newUser(number, code, function(err){
-                    if (err) {
-                        console.log('error: ' + err);
-                    } else console.log("I added.");
-                    db.client.end();
-                });
+                console.log('error: ' + err);
+                //db.client.end();
             }
-        } else {
-            console.log('error: ' + err);
-            db.client.end();
-        }
-    });
-}
+        });
+},
+    // Have to add phone number!
+    checkCode: function (code, callback) {
+        var result;
+        db.findCode(code, function (err, res) {
+            if(!err){
+                result = res.rows[0].exists;
+                if(result){
+                    console.log(currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/"
+                        + currentdate.getFullYear() + " @ "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds() + "   Codes are the same " + code);
+                    //db.client.end();
+                    callback(result);
+                } else {
+                    console.log(currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/"
+                        + currentdate.getFullYear() + " @ "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds() + "   Codes are not the same " + code);
+                    //db.client.end();
+                    callback(result);
 
-function checkCode(number, code) {
-    db.findCode(number, code, function (err, res) {
-        if(!err){
-            if(res.rows[0].exists){
-                console.log("Codes for number " + number + " are the same");
-                db.client.end();
+                }
             } else {
-                console.log("Codes for number " + number + " are not the same");
-                db.client.end();
+                console.log('error: ' + err);
+                //db.client.end();
             }
-        } else {
-            console.log('error: ' + err);
-            db.client.end();
+        });
         }
-    });
-}
-
-checkCode(9876453214, 10689);
+};
