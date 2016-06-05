@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>WiFi Auth</title>
+        <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+  </head>
+  <body>
+    <div class="login-page">
+  <div class="form">
+    <form class="login-form" action="/" method="post" name="pnumber">
+      <input type="text" class="masked" placeholder="Phone number" name="number" required id="phone" pattern="\(\d{3}\) \d{3}\-\d{4}"/>
+      <button type="button-code">get code</button>
+      <p class="message">Employee/Student?<a href="/ad" onclick="parent.location='/ad'">Sign in using e-mail</a></p>
+      <div class="social-login">
+        <a href="#">
+          <i class="fa fa-vk fa-lg"></i>
+          Sign In via VK
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/js/script.js"></script>
+    <script src="/public/js/jquery.maskedinput.js"></script>
+  </body>
+</html>
