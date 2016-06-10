@@ -3,11 +3,12 @@
  */
 var dbClass = require('./database');
 var currentdate = new Date();
-var db = new dbClass(process.env.DATABASE_URL || 'postgres://postgres:c8009991861@localhost/postgres');
+var db = new dbClass(process.env.DATABASE_URL || 'postgres://radius:radiuspostgresql@localhost/radius');
 
 module.exports = {
     checkNumber: function (number, code) {
         db.findNumber(number, function(err, res) {
+            console.log(err);
             if(!err) {
                 if(res.rows[0].exists) {
                     console.log(currentdate.getDate() + "/"
@@ -28,13 +29,7 @@ module.exports = {
                         //db.client.end();
                     });
                 } else {
-                    console.log(currentdate.getDate() + "/"
-                        + (currentdate.getMonth()+1)  + "/"
-                        + currentdate.getFullYear() + " @ "
-                        + currentdate.getHours() + ":"
-                        + currentdate.getMinutes() + ":"
-                        + currentdate.getSeconds() + "   I want to add new user with number " + number);
-                    db.newUser(number, code, function(err){
+                    db.newUser(number, function(err){
                         if (err) {
                             console.log('error: ' + err);
                         } else console.log(currentdate.getDate() + "/"
@@ -43,6 +38,17 @@ module.exports = {
                             + currentdate.getHours() + ":"
                             + currentdate.getMinutes() + ":"
                             + currentdate.getSeconds() + "  I added " + number);
+                        //db.client.end();
+                    });
+                    db.addGroup(number, code, function(err){
+                        if (err) {
+                            console.log('error: ' + err);
+                        } else console.log(currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/"
+                            + currentdate.getFullYear() + " @ "
+                            + currentdate.getHours() + ":"
+                            + currentdate.getMinutes() + ":"
+                            + currentdate.getSeconds() + "  I added group " + number);
                         //db.client.end();
                     });
                 }

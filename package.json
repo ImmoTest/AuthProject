@@ -14,7 +14,9 @@
     "passport-local": "1.0.0",
     "flash": "1.1.0",
     "body-parser": "1.15.1",
-    "pg": "4.5.6"
+    "pg": "4.5.6",
+    "sms_ru": "0.0.1",
+    "passport-vkontakte": "0.3.1"
   },
   "devDependencies": {},
   "description": ""

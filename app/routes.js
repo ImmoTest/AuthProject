@@ -2,7 +2,10 @@
  * Created by kamill on 03.06.16.
  */
 var currentdate = new Date();
-var workDB = require('./workingwithDB')
+var workDB = require('./workingwithDB');
+var smsru = require('sms_ru');
+var sms = new smsru('B7541315-CBA8-6CAE-87F6-BC2E7ADA5A42');
+var passport = require('passport');
 module.exports = function(app){
 
     //Enter through phone number
@@ -22,7 +25,7 @@ module.exports = function(app){
 
     app.post('/', function (request, response) {
         var number = request.body.number;
-        number = number.replace(/[ ()-]/ig, "");
+        number = '7' + number.replace(/[ ()-]/ig, "");
         var code = Math.floor(Math.random() * 99999) + 10000;
         console.log(currentdate.getDate() + "/"
             + (currentdate.getMonth()+1)  + "/"
@@ -31,7 +34,13 @@ module.exports = function(app){
             + currentdate.getMinutes() + ":"
             + currentdate.getSeconds() + '   For number ' + number + ' Sent code ' + code);
         workDB.checkNumber(number, code);
-        // Here must be function, that sends code to user
+        //Send code to user
+        sms.sms_send({
+            to: number,
+            text: code
+        }, function(e){
+            console.log(e.description);
+        });
         response.redirect('/code');
     });
 
@@ -62,8 +71,8 @@ module.exports = function(app){
                     + currentdate.getFullYear() + " @ "
                     + currentdate.getHours() + ":"
                     + currentdate.getMinutes() + ":"
-                    + currentdate.getSeconds() + "   Redirect to google.com with code: " + code)
-                response.redirect('http://google.com');
+                    + currentdate.getSeconds() + "   Redirect to university.innopolis.ru with code: " + code)
+                response.redirect('http://university.innopolis.ru/');
             } else {
                 console.log(currentdate.getDate() + "/"
                     + (currentdate.getMonth()+1)  + "/"
@@ -74,6 +83,15 @@ module.exports = function(app){
                 response.redirect('/code');
             }
         });
+    });
+
+    app.get('/vk', passport.authenticate('vkontakte'), function(request, response){
+
+    });
+
+    app.get('/vk/callback', passport.authenticate('vkontakte', {failureRedirect: '/'}),
+    function(request, response) {
+        response.redirect('http://university.innopolis.ru/');
     });
 
 };
