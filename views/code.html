@@ -4,12 +4,13 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WiFi Auth</title>
         <link rel="stylesheet" href="/public/css/style.css">
+        <link rel="shortcut icon" href="/public/images/favicon.png" type="image/x-icon">
   </head>
   <body>
     <div class="login-page">
   <div class="form">
-    <form class="code-form" onsubmit="return validateFormSMS()" method="post">
-      <input type="text" placeholder="SMS code" name="ucode"/>
+    <form class="code-form" method="post" action="/code">
+      <input type="number" placeholder="SMS code" name="ucode">
       <button>let me in</button>
       <p class="message">Please enter your code</p>
     </form>

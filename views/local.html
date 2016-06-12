@@ -4,19 +4,21 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WiFi Auth</title>
     <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+    <link rel="shortcut icon" href="/public/images/favicon.png" type="image/x-icon">
 </head>
 <body>
 <div class="login-page">
     <div class="form">
-        <form class="login-form" action="/ad" method="post">
-            <input type="text" placeholder="E-mail" name="email" required id="email"/>
+        <form class="login-form" action="/ad" method="post" id="local">
+            <input type="email" placeholder="E-mail" name="email" required id="email"/>
             <input type="password" placeholder="Password" name="pwd" required id="pwd"/>
-            <button type="button-code">let me in</button>
+            <button type="button-code" id="buttoncheck">let me in</button>
             <p class="message">Guest?<a href="/" onclick="parent.location='/'">Sign in using e-mail</a></p>
+            <span id="result" style="display: block; padding: 5px; color: red;"></span>
         </form>
     </div>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="/public/js/script.js"></script>
 <script src="/public/js/jquery.maskedinput.js"></script>
 </body>

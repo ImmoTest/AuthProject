@@ -4,14 +4,15 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WiFi Auth</title>
         <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+      <link rel="shortcut icon" href="/public/images/favicon.png" type="image/x-icon">
   </head>
   <body>
     <div class="login-page">
   <div class="form">
-    <form class="login-form" action="/" method="post" name="pnumber">
+    <form class="login-form" action="/" method="post" name="pnumber" id="login">
       <input type="text" class="masked" placeholder="Phone number" name="number" required id="phone" pattern="\(\d{3}\) \d{3}\-\d{4}"/>
       <button type="button-code">get code</button>
-      <p class="message">Employee/Student?<a href="/ad" onclick="parent.location='/ad'">Sign in using e-mail</a></p>
+      <p class="message" >Employee/Student?<a href="/ad" onclick="parent.location='/ad'">Sign in using e-mail</a></p>
       <div class="social-login">
         <a href="/vk" onclick="parent.location='/vk'">
           <i class="fa fa-vk fa-lg"></i>

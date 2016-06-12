@@ -7,8 +7,8 @@ var dbClass = require('./database');
 var currentdate = new Date();
 var db = new dbClass(process.env.DATABASE_URL || 'postgres://radius:radiuspostgresql@localhost/radius');
 passport.use(new vkStrategy({
-    clientID:      ,
-    clientSecret: "",
+    clientID:      5501094,
+    clientSecret: "upiz9JRrTsuO4w4saBJs",
     callbackURL: "http://wifi1.university.innopolis.ru/vk/callback"
     },
     function (accessToken, refreshToken, profile, done) {

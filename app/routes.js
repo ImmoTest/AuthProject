@@ -3,56 +3,83 @@
  */
 var currentdate = new Date();
 var workDB = require('./workingwithDB');
-var smsru = require('sms_ru');
-var sms = new smsru('B7541315-CBA8-6CAE-87F6-BC2E7ADA5A42');
 var passport = require('passport');
 module.exports = function(app){
-
+    sess = new Object();
     //Enter through phone number
     app.get('/', function (request, response){
-        response.render('phoneenter.html');
+        response.render('start.html');
     });
 
     //Enter through ActiveDirectory
     app.get('/ad', function (request, response){
-        response.render('stempenter.html');
+        response.render('local.html');
     });
 
     //Code from
     app.get('/code', function(request, response){
-        response.render('smsenter.html');
+        if(sess.hasOwnProperty('phone')){
+            response.render('code.html');
+        } else {
+            response.redirect('/');
+        }
+
     });
 
     app.post('/', function (request, response) {
-        var number = request.body.number;
-        number = '7' + number.replace(/[ ()-]/ig, "");
-        var code = Math.floor(Math.random() * 99999) + 10000;
-        console.log(currentdate.getDate() + "/"
-            + (currentdate.getMonth()+1)  + "/"
-            + currentdate.getFullYear() + " @ "
-            + currentdate.getHours() + ":"
-            + currentdate.getMinutes() + ":"
-            + currentdate.getSeconds() + '   For number ' + number + ' Sent code ' + code);
-        workDB.checkNumber(number, code);
-        //Send code to user
-        sms.sms_send({
-            to: number,
-            text: code
-        }, function(e){
-            console.log(e.description);
-        });
-        response.redirect('/code');
+        var number = request.body.number || '';
+        if (number != ''){
+            number = '7' + number.replace(/[ ()-]/ig, "");
+            sess.phone = number;
+            var code = Math.floor(Math.random() * 99999) + 10000;
+            console.log(currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getFullYear() + " @ "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds() + '   For number ' + number + ' Sent code ' + code);
+            workDB.checkNumber(number, code);
+            //Send code to user
+            sms.sms_send({
+                to: number,
+                text: code
+            }, function(e){
+                console.log(e.description);
+            });
+            response.redirect('/code');
+        } else {
+            response.json({
+                result: false,
+                error: "Phone number is required."
+            });
+        }
     });
 
     app.post('/ad', function (request, response) {
-        var email = request.body.email;
-        var password = request.body.pwd;
-        console.log(currentdate.getDate() + "/"
-            + (currentdate.getMonth()+1)  + "/"
-            + currentdate.getFullYear() + " @ "
-            + currentdate.getHours() + ":"
-            + currentdate.getMinutes() + ":"
-            + currentdate.getSeconds() +  "   Email: " + email + " Password: " + password);
+        var email = request.body.email || '';
+        if (email != '') {
+            var password = request.body.password || '';
+            if (password != ''){
+                //get information from AD
+                //...
+                if (email == 'k.gusmanov@innopolis.ru' && password == '123456'){
+                    console.log(currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/"
+                        + currentdate.getFullYear() + " @ "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds() +  "   Email: " + email + " Password: " + password);
+                    response.json({
+                        result: true
+                    });
+                } else {
+                    response.json({
+                        result: false,
+                        error: "Invalid email or password"
+                    });
+                }
+            }
+        }
     });
 
     app.post('/code', function (request, response) {
@@ -93,5 +120,4 @@ module.exports = function(app){
     function(request, response) {
         response.redirect('http://university.innopolis.ru/');
     });
-
 };
