@@ -57,6 +57,6 @@ function checkLocalForm(form) {
 }
 
 $("#local").submit(function(e) {
-    checkLocalForm($(this));
-    e.preventDefault();
+    //checkLocalForm($(this));
+    //e.preventDefault();
 });

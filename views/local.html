@@ -9,9 +9,11 @@
 <body>
 <div class="login-page">
     <div class="form">
-        <form class="login-form" action="/ad" method="post" id="local">
-            <input type="email" placeholder="E-mail" name="email" required id="email"/>
-            <input type="password" placeholder="Password" name="pwd" required id="pwd"/>
+        <form class="login-form" action="http://192.168.88.1/login" method="post" id="local" name="login">
+            <input type="text" placeholder="E-mail" name="username" required id="email"/>
+            <input type="password" placeholder="Password" name="password" required id="pwd"/>
+            <input type="hidden" name="dst" value="http://university.innopolis.ru" />
+            <input type="hidden" name="popup" value="true" />
             <button type="button-code" id="buttoncheck">let me in</button>
             <p class="message">Guest?<a href="/" onclick="parent.location='/'">Sign in using e-mail</a></p>
             <span id="result" style="display: block; padding: 5px; color: red;"></span>
@@ -20,6 +22,12 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="/public/js/script.js"></script>
+<script>src="/public/js/jquery.session.js"</script>
 <script src="/public/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+    <!--
+    document.login.username.focus();
+    //-->
+</script>
 </body>
 </html>

@@ -9,7 +9,7 @@
   <body>
     <div class="login-page">
   <div class="form">
-    <form class="login-form" action="/" method="post" name="pnumber" id="login">
+    <form class="login-form" action="/code" method="post" name="pnumber" id="login">
       <input type="text" class="masked" placeholder="Phone number" name="number" required id="phone" pattern="\(\d{3}\) \d{3}\-\d{4}"/>
       <button type="button-code">get code</button>
       <p class="message" >Employee/Student?<a href="/ad" onclick="parent.location='/ad'">Sign in using e-mail</a></p>
@@ -25,5 +25,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" src="/public/js/script.js"></script>
     <script src="/public/js/jquery.maskedinput.js"></script>
+    <script>src="/public/js/jquery.session.js"</script>
   </body>
 </html>
