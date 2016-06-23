@@ -34,6 +34,10 @@ module.exports = function(app){
         response.render('alogin.html');
     });
 
+    app.get('/tg', function (request, response) {
+        response.render('tg.html');
+    });
+
     app.post('/', function (request, response) {
         var number = request.body.number || '';
         if (number != ''){
@@ -64,45 +68,45 @@ module.exports = function(app){
     });
 
     app.post('/ad', function (request, response) {
-        // console.log("Request: " + request);
-        // console.log("Response: " + response);
-        // var email = request.body.email || '';
-        // if (email != '') {
-        //     var password = request.body.password || '';
-        //     if (password != ''){
-        //         //get information from AD
-        //         //...
-        //         if (email == 'k.gusmanov@innopolis.ru' && password == '123456'){
-        //             console.log(currentdate.getDate() + "/"
-        //                 + (currentdate.getMonth()+1)  + "/"
-        //                 + currentdate.getFullYear() + " @ "
-        //                 + currentdate.getHours() + ":"
-        //                 + currentdate.getMinutes() + ":"
-        //                 + currentdate.getSeconds() +  "   Email: " + email + " Password: " + password);
-        //             response.json({
-        //                 result: true
-        //             });
-        //         } else {
-        //             response.json({
-        //                 result: false,
-        //                 error: "Invalid email or password"
-        //             });
-        //         }
-        //     }
-        // }
+        console.log("Request: " + request);
+        console.log("Response: " + response);
+        var email = request.body.email || '';
+        if (email != '') {
+            var password = request.body.password || '';
+            if (password != ''){
+                //get information from AD
+                //...
+                if (email == 'k.gusmanov@innopolis.ru' && password == '123456'){
+                    console.log(currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/"
+                        + currentdate.getFullYear() + " @ "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds() +  "   Email: " + email + " Password: " + password);
+                    response.json({
+                        result: true
+                    });
+                } else {
+                    response.json({
+                        result: false,
+                        error: "Invalid email or password"
+                    });
+                }
+            }
+        }
         // var obj = {};
-        var sess = request.session;
-        sess['link-orig'] = request.body['link-orig'];
-        sess['link-login-only'] = request.body['link-login-only'];
-        sess['chap-id'] = request.body['chap-id'];
-        sess['chap-challenge'] = request.body['chap-challenge'];
-        console.log("Sess: " + sess['link-orig']);
-        console.log("Lonly: " + sess['link-login-only']);
-        console.log('ChapId: ' + sess['chap-id']);
-        console.log("ChapChal: " + sess['chap-challenge']);
-        console.log('body username: ' + JSON.stringify(request.body.username));
-        console.log('POST body: ' + JSON.stringify(request.body));
-        response.render('login.html');
+        // var sess = request.session;
+        // sess['link-orig'] = request.body['link-orig'];
+        // sess['link-login-only'] = request.body['link-login-only'];
+        // sess['chap-id'] = request.body['chap-id'];
+        // sess['chap-challenge'] = request.body['chap-challenge'];
+        // console.log("Sess: " + sess['link-orig']);
+        // console.log("Lonly: " + sess['link-login-only']);
+        // console.log('ChapId: ' + sess['chap-id']);
+        // console.log("ChapChal: " + sess['chap-challenge']);
+        // console.log('body username: ' + JSON.stringify(request.body.username));
+        // console.log('POST body: ' + JSON.stringify(request.body));
+        // response.render('login.html');
 
     });
 
@@ -160,6 +164,14 @@ module.exports = function(app){
         //         response.redirect('/code');
         //     }
         // });
+    });
+
+    app.post('/tg', function (request, response) {
+        var login = request.body.tglogin || '';
+        var password = request.body.password || '';
+        console.log('Login: ' + login + '\n' + 'Password: ' + password);
+        //Add checking tg
+        response.redirect('http://university.innopolis.ru/');
     });
 
     app.get('/vk', passport.authenticate('vkontakte'), function(request, response){

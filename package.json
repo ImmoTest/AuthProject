@@ -18,6 +18,7 @@
     "interact.js": "1.2.6",
     "jquery": "^3.0.0",
     "mikronode": "^0.3.3",
+    "node-telegram-bot-api": "^0.23.3",
     "passport": "0.3.2",
     "passport-local": "1.0.0",
     "passport-vkontakte": "0.3.1",

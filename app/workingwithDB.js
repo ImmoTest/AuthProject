@@ -26,7 +26,6 @@ module.exports = {
                             + currentdate.getHours() + ":"
                             + currentdate.getMinutes() + ":"
                             + currentdate.getSeconds() + "   I updated " + number);
-                        //db.client.end();
                     });
                 } else {
                     db.newUser(number, function(err){
@@ -38,7 +37,6 @@ module.exports = {
                             + currentdate.getHours() + ":"
                             + currentdate.getMinutes() + ":"
                             + currentdate.getSeconds() + "  I added " + number);
-                        //db.client.end();
                     });
                     db.addGroup(number, code, function(err){
                         if (err) {
@@ -49,7 +47,6 @@ module.exports = {
                             + currentdate.getHours() + ":"
                             + currentdate.getMinutes() + ":"
                             + currentdate.getSeconds() + "  I added group " + number);
-                        //db.client.end();
                     });
                 }
             } else {
@@ -71,7 +68,6 @@ module.exports = {
                         + currentdate.getHours() + ":"
                         + currentdate.getMinutes() + ":"
                         + currentdate.getSeconds() + "   Codes are the same " + code);
-                    //db.client.end();
                     callback(result);
                 } else {
                     console.log(currentdate.getDate() + "/"
@@ -80,13 +76,11 @@ module.exports = {
                         + currentdate.getHours() + ":"
                         + currentdate.getMinutes() + ":"
                         + currentdate.getSeconds() + "   Codes are not the same " + code);
-                    //db.client.end();
                     callback(result);
 
                 }
             } else {
                 console.log('error: ' + err);
-                //db.client.end();
             }
         });
         }
